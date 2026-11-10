@@ -1074,35 +1074,23 @@ body.has-turned .swipe-hint {
   color: var(--ink-soft);
 }
 
-.families {
-  max-width: 72cqw;
+.compliments {
+  max-width: 76cqw;
+  padding-left: 0.16em;
   font-family: var(--caps);
-  font-size: 3cqw;
+  font-size: 3.7cqw;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  line-height: 1.6;
-  color: var(--ink-soft);
-}
-
-.closing-names {
-  font-family: var(--script);
-  font-size: 11cqw;
-  line-height: 1.15;
-  color: var(--name);
-}
-
-.amp-inline {
-  color: var(--gold);
-}
-
-.closing-date {
-  padding-left: 0.3em;
-  font-family: var(--caps);
-  font-size: 3.2cqw;
-  font-weight: 600;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
   text-transform: uppercase;
-  color: var(--gold-deep);
+  color: var(--ink);
+}
+
+.closing-family {
+  font-family: var(--script);
+  font-size: 16cqw;
+  line-height: 1.1;
+  color: var(--name);
 }
 
 .replay {

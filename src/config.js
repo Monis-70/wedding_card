@@ -46,7 +46,7 @@ export const config = {
     map: { url: 'https://share.google/sy6khHyUMiL4J80iD', lat: null, lng: null, query: 'K Ground, Jogeshwari West, Mumbai' },
   },
 
-  families: 'The Gadith & Patka Families',
+  families: 'Gadith\u2019s',
 
   // Put the song in /public/music/ and set e.g. src: '/music/song.mp3'. Empty = no music button.
   music: { src: '/music/song.mp3', volume: 0.6, startAt: 0 },
@@ -60,6 +60,7 @@ export const config = {
     countdownDone: 'Today is the day \u2014 Alhamdulillah',
     closingKicker: 'With love & duas',
     closing: 'Your presence and duas are the most precious gift we could ask for. We cannot wait to celebrate with you.',
+    compliments: 'With Best Complements',
   },
 
   // Public address after deploying (used for share previews), e.g. 'https://shafiya-burhan.vercel.app'.

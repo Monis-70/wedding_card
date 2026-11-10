@@ -105,9 +105,7 @@ function eventPage(event, kind) {
   </div>`;
 }
 
-function closingPage(variant) {
-  const main = variant === 'reception' ? config.reception : config.nikah;
-  const p = dateParts(main.start);
+function closingPage() {
   return `
   <div class="sheet sheet--closing">
     ${bg()}
@@ -115,11 +113,12 @@ function closingPage(variant) {
     <div class="stack">
       <div class="closing-mono" data-r>${monogram('mono-gold')}</div>
       <p class="eyebrow" data-r>${esc(T.closingKicker)}</p>
+      ${orn()}
       <p class="closing-text" data-r>${esc(T.closing)}</p>
       ${orn()}
-      <p class="families" data-r>${esc(config.families)}</p>
-      <p class="closing-names" data-w>${bride} <span class="amp-inline">&amp;</span> ${groom}</p>
-      <p class="closing-date" data-r>${p.day} &middot; ${esc(p.month)} &middot; ${esc(p.year)}</p>
+      <p class="compliments" data-r>${esc(T.compliments)}</p>
+      ${orn()}
+      <p class="closing-family" data-w>${esc(config.families)}</p>
       <button class="replay" type="button" data-r>${icon.replay}<span>Watch again</span></button>
     </div>
   </div>`;
@@ -201,7 +200,7 @@ export function pageList(variant) {
   ];
   if (variant !== 'reception') pages.push({ id: 'nikah', label: 'Nikah', html: eventPage(config.nikah, 'nikah') });
   pages.push({ id: 'reception', label: 'Reception', html: eventPage(config.reception, 'reception') });
-  pages.push({ id: 'closing', label: 'With love', html: closingPage(variant) });
+  pages.push({ id: 'closing', label: 'With love', html: closingPage() });
   return pages;
 }
 
