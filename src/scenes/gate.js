@@ -1,29 +1,32 @@
-// Scene 2: the gatefold invitation. The S+B logo lands on the wax seal like a stamp, the seal cracks in
-// two, the chiffon ribbon slides away to both sides (slow drift, then fast), and the doors swing open.
+// Scene 2: the gatefold invitation. The S+B logo lands on the wax seal like a stamp; the guest's tap cracks
+// the seal in two, the chiffon ribbon slides away to both sides (slow drift, then fast), and the doors swing open.
 import { gateSealSVG } from '../lib/art.js';
 import { gateMarkup } from '../lib/gate-art.js';
-import { $, $$ } from '../lib/dom.js';
+import { $, $$, esc } from '../lib/dom.js';
 import { E, finished, play, spring, vibrate, wait } from '../lib/anim.js';
 import { sparkBurst } from '../lib/fx.js';
 
 const DRIFT = 'cubic-bezier(.35,0,.65,1)';
 const SPEED_UP = 'cubic-bezier(.5,0,.86,.32)';
 
-export function createGate(root, { reduced, petals }) {
+export function createGate(root, { reduced, petals, hint }) {
   root.innerHTML = `
     <div class="gate-zoom">
       <div class="gate">
         <div class="gate-liner"></div>
         <div class="gate-doors"></div>
         <div class="gate-ribbon"></div>
-        <div class="gseal"><div class="gseal-inner">${gateSealSVG()}<span class="gseal-sheen"></span></div></div>
+        <div class="gseal"><div class="gseal-inner">${gateSealSVG()}<span class="gseal-sheen"></span></div><span class="gseal-pulse"></span></div>
+        <p class="gate-hint" aria-hidden="true">${esc(hint)}</p>
         <div class="gate-glow"></div>
       </div>
-    </div>`;
+    </div>
+    <button class="gate-tap" type="button" aria-label="Open the invitation" hidden></button>`;
   const zoom = $('.gate-zoom', root);
   const gate = $('.gate', root);
   const seal = $('.gseal', root);
   const sealInner = $('.gseal-inner', root);
+  const hintEl = $('.gate-hint', root);
   let geo;
 
   function build() {
@@ -38,6 +41,7 @@ export function createGate(root, { reduced, petals }) {
       width: `${geo.sealSize}px`,
       height: `${geo.sealSize}px`,
     });
+    hintEl.style.top = `${geo.cy - geo.sealSize * 0.68}px`;
   }
   build();
   let opening = false;
@@ -73,6 +77,32 @@ export function createGate(root, { reduced, petals }) {
       setTimeout(() => sparkBurst(gate, 50, sealY(), { count: 12, reach: [0.1, 0.24], size: [7, 13] }), 160);
     },
 
+    // Anywhere on the screen opens it; onTap runs inside the tap itself, so phones allow the song to start.
+    waitForTap(onTap) {
+      const btn = $('.gate-tap', root);
+      root.removeAttribute('aria-hidden');
+      btn.hidden = false;
+      const show = setTimeout(() => {
+        seal.classList.add('is-waiting');
+        hintEl.classList.add('is-on');
+      }, 350);
+      return new Promise((resolve) => {
+        btn.addEventListener(
+          'click',
+          () => {
+            onTap();
+            clearTimeout(show);
+            btn.remove();
+            root.setAttribute('aria-hidden', 'true');
+            seal.classList.remove('is-waiting');
+            hintEl.classList.remove('is-on');
+            resolve();
+          },
+          { once: true },
+        );
+      });
+    },
+
     async open(onReveal) {
       opening = true;
       window.removeEventListener('resize', onResize);
@@ -83,9 +113,7 @@ export function createGate(root, { reduced, petals }) {
         return;
       }
 
-      // 1. a glint across the wax, then the seal cracks in two and falls away
-      seal.classList.add('is-glint');
-      await wait(900);
+      // 1. the seal gives under the tap, cracks in two and falls away
       await finished(play(sealInner, [{ transform: 'scale(1)' }, { transform: 'scale(.93)' }], { duration: 160, easing: E.in }));
       const shards = ['l', 'r'].map((side) => {
         const d = document.createElement('div');

@@ -115,7 +115,7 @@ deckEl.addEventListener('pointerup', (e) => {
 });
 
 const flowers = createFlowers($('.scene--flowers'), { reduced, petals });
-const gate = createGate($('.scene--gate'), { reduced, petals });
+const gate = createGate($('.scene--gate'), { reduced, petals, hint: config.text.sealHint });
 
 // Browsers only allow sound after a touch, so the song starts on the guest's first tap or swipe.
 let musicStartedAt = 0;
@@ -159,6 +159,7 @@ async function run() {
   gate.reveal(1400);
   flowers.part(1400);
   await flyInto(target, { reduced, onLand: () => gate.popSeal() });
+  await gate.waitForTap(startMusic);
 
   document.body.classList.remove('intro-playing');
   await gate.open(() => {
