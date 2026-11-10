@@ -43,13 +43,13 @@ export const config = {
     venuePrefix: 'At –',
     venue: 'K Ground',
     address: ['Jogeshwari West'],
-    map: { url: '', lat: null, lng: null, query: 'K Ground, Jogeshwari West, Mumbai' },
+    map: { url: 'https://share.google/sy6khHyUMiL4J80iD', lat: null, lng: null, query: 'K Ground, Jogeshwari West, Mumbai' },
   },
 
   families: 'The Gadith & Patka Families',
 
   // Put the song in /public/music/ and set e.g. src: '/music/song.mp3'. Empty = no music button.
-  music: { src: '', volume: 0.6, startAt: 0 },
+  music: { src: '/music/song.mp3', volume: 0.6, startAt: 0 },
 
   text: {
     revealTitle: 'Tap to Reveal',
