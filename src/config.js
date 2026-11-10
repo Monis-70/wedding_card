@@ -13,7 +13,7 @@ export const config = {
     hosts: 'Mr & Mrs Shifa Abdul Sattar Gadith',
     hostsLine: 'Cordially invite you to the wedding of their Daughter',
     joiner: 'With',
-    groomParents: 'S/o Mrs Asma Sajid Patka',
+    groomParents: 'S/o Asma Sajid Patka',
   },
 
   nikah: {
