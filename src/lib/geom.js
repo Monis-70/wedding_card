@@ -1,4 +1,4 @@
-// Small geometry helpers for building organic SVG outlines (petals, wax).
+// Small geometry helpers for building organic SVG outlines (ribbon, knot).
 
 const f = (n) => Math.round(n * 100) / 100;
 
@@ -17,16 +17,4 @@ export function smoothPath(points, closed = true, tension = 1) {
     d += `C${f(c1x)} ${f(c1y)} ${f(c2x)} ${f(c2y)} ${f(p2[0])} ${f(p2[1])}`;
   }
   return closed ? d + 'Z' : d;
-}
-
-// Irregular round outline (wax seal), radius modulated by a few sines.
-export function blobPath(r, wobble = [[3, 3.2, 0.6], [5, 2.4, 2.1], [8, 1.6, 4], [13, 1.1, 1.3]], count = 64) {
-  const pts = [];
-  for (let i = 0; i < count; i++) {
-    const a = (i / count) * Math.PI * 2;
-    let rr = r;
-    for (const [k, amp, ph] of wobble) rr += amp * Math.sin(k * a + ph);
-    pts.push([Math.cos(a) * rr, Math.sin(a) * rr]);
-  }
-  return smoothPath(pts, true);
 }

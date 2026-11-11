@@ -52,7 +52,7 @@ export const config = {
   music: { src: '/music/song.mp3', volume: 0.6, startAt: 0 },
 
   text: {
-    sealHint: 'Tap to open',
+    tapHint: 'Tap to open',
     revealTitle: 'Tap to Reveal',
     revealedTitle: 'Save the Date',
     inshallah: 'Inshallah',

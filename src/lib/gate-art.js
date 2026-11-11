@@ -223,7 +223,6 @@ export function gateMarkup(W, H) {
   return {
     cx,
     cy,
-    sealSize: W * 0.27,
     doors: `<div class="door door--l" style="left:0;width:${f(cx + 16)}px">${doorSVG(W, H, 'l')}</div>
       <div class="door door--r" style="left:${f(cx - 16)}px;width:${f(W - cx + 16)}px">${doorSVG(W, H, 'r')}</div>`,
     ribbon: [

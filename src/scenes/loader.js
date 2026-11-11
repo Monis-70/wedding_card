@@ -1,4 +1,4 @@
-// Scene 0: the gold monogram draws itself (pure CSS, starts before JS), then flies into the wax seal.
+// Scene 0: the gold monogram draws itself (pure CSS, starts before JS), then melts away as the flowers part.
 import { $ } from '../lib/dom.js';
 import { E, finished, play, wait } from '../lib/anim.js';
 
@@ -35,24 +35,13 @@ export async function revealStage({ reduced }) {
   await finished(play($('.loader-bg', loader), [{ opacity: 1 }, { opacity: 0 }], { duration: reduced ? 300 : 700, easing: E.inOutSoft }));
 }
 
-// The logo flies onto the wax seal (target = its final on-screen box) and hands over to it.
-export async function flyInto(target, { reduced, onLand }) {
+// The logo melts away while the flowers part and the ribbon-tied invitation appears behind it.
+export async function fadeLogo({ reduced }) {
   const loader = $('#loader');
-  if (!loader) return onLand();
-  const mono = $('.loader-mono', loader);
-  if (reduced) {
-    onLand();
-    await finished(play(loader, [{ opacity: 1 }, { opacity: 0 }], { duration: 500 }));
-    loader.remove();
-    return;
-  }
-  const a = mono.getBoundingClientRect();
-  const dx = target.left + target.width / 2 - (a.left + a.width / 2);
-  const dy = target.top + target.height / 2 - (a.top + a.height / 2);
-  const s = target.width / a.width;
-  const fly = play(mono, [{ transform: 'none' }, { transform: `translate(${dx}px, ${dy}px) scale(${s})` }], { duration: 1300, easing: E.inOut });
-  setTimeout(onLand, 980);
-  await finished(fly);
-  await finished(play(mono, [{ opacity: 1 }, { opacity: 0 }], { duration: 380, easing: E.inOutSoft }));
+  if (!loader) return;
+  const fade = reduced
+    ? play(loader, [{ opacity: 1 }, { opacity: 0 }], { duration: 500 })
+    : play($('.loader-mono', loader), [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'scale(1.1)' }], { duration: 900, easing: E.inOutSoft });
+  await finished(fade);
   loader.remove();
 }

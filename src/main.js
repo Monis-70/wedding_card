@@ -5,7 +5,7 @@ import { E, finished, play, reducedMotion as reduced, wait } from './lib/anim.js
 import { Music } from './lib/audio.js';
 import { Petals } from './lib/petals.js';
 import { sparkBurst } from './lib/fx.js';
-import { flyInto, loadAssets, revealStage } from './scenes/loader.js';
+import { fadeLogo, loadAssets, revealStage } from './scenes/loader.js';
 import { createFlowers } from './scenes/flowers.js';
 import { createGate } from './scenes/gate.js';
 import { createDeck } from './deck/deck.js';
@@ -115,7 +115,7 @@ deckEl.addEventListener('pointerup', (e) => {
 });
 
 const flowers = createFlowers($('.scene--flowers'), { reduced, petals });
-const gate = createGate($('.scene--gate'), { reduced, petals, hint: config.text.sealHint });
+const gate = createGate($('.scene--gate'), { reduced, petals, hint: config.text.tapHint });
 
 // Browsers only allow sound after a touch, so the song starts on the guest's first tap or swipe.
 let musicStartedAt = 0;
@@ -154,11 +154,10 @@ async function run() {
   await flowers.bloom();
   await wait(reduced ? 100 : 500);
 
-  const target = gate.sealRect();
   petals.setCount(reduced ? 4 : 16);
   gate.reveal(1400);
   flowers.part(1400);
-  await flyInto(target, { reduced, onLand: () => gate.popSeal() });
+  await fadeLogo({ reduced });
   await gate.waitForTap(startMusic);
 
   document.body.classList.remove('intro-playing');

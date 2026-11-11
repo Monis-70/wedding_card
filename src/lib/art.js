@@ -1,6 +1,5 @@
 // Vector artwork drawn in code: crisp at every screen size. Palette: ivory, blush, gold and rose gold.
 import { MONOGRAM as M } from './monogram-data.js';
-import { blobPath } from './geom.js';
 
 const GOLD_STOPS = `
   <stop offset="0" stop-color="#8C6A2F"/><stop offset=".22" stop-color="#D2B26A"/>
@@ -22,13 +21,6 @@ export const DEFS = `
     <linearGradient id="g-foil" x1="0" y1="0" x2="1" y2="1">${GOLD_STOPS}</linearGradient>
     <linearGradient id="g-foil-h" x1="0" y1="0" x2="1" y2="0">${GOLD_STOPS}</linearGradient>
     <linearGradient id="g-rose" x1="0" y1="0" x2="1" y2="1">${ROSE_STOPS}</linearGradient>
-    <radialGradient id="g-gwax" cx=".36" cy=".3" r=".82">
-      <stop offset="0" stop-color="#ECD3CA"/><stop offset=".42" stop-color="#C99B91"/>
-      <stop offset=".8" stop-color="#A06C63"/><stop offset="1" stop-color="#77473F"/>
-    </radialGradient>
-    <radialGradient id="g-gwax-disc" cx=".42" cy=".36" r=".72">
-      <stop offset="0" stop-color="#D3A79E"/><stop offset="1" stop-color="#A5736A"/>
-    </radialGradient>
     <radialGradient id="g-petal" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="46">
       <stop offset=".08" stop-color="#EDC6BC"/><stop offset=".45" stop-color="#F8E6E0"/><stop offset="1" stop-color="#FFFDF9"/>
     </radialGradient>
@@ -46,7 +38,6 @@ export const DEFS = `
     <linearGradient id="g-gem" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#F6EEEA"/><stop offset="1" stop-color="#DCCBC4"/>
     </linearGradient>
-    <filter id="f-wax-shadow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4"/></filter>
     <filter id="f-blur3" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
   </defs>
 </svg>`;
@@ -57,31 +48,6 @@ export function monogram(cls = '') {
   return `<svg class="monogram ${cls}" viewBox="${M.viewBox}" aria-hidden="true" focusable="false">
     <path class="mg mg-1" d="${M.first}" style="--len:${M.firstLength}"/>
     <path class="mg mg-2" d="${M.second}" style="--len:${M.secondLength}"/>
-  </svg>`;
-}
-
-/* ---------- dusty-rose wax seal stamped with the joined S+B (gatefold) ---------- */
-
-const WAX = blobPath(90, [[3, 2.6, 2.2], [5, 2.1, 0.4], [9, 1.5, 3.1], [14, 0.9, 1.7]]);
-
-export function gateSealSVG() {
-  const s = 104 / M.width;
-  const w = M.width * s;
-  const h = M.height * s;
-  const mono = (attrs) => `<path d="${M.first}" ${attrs}/><path d="${M.second}" ${attrs}/>`;
-  return `<svg class="gseal-svg" viewBox="-104 -104 208 208" aria-hidden="true" focusable="false">
-    <path d="${WAX}" fill="#3d211c" opacity=".36" transform="translate(4 8)" filter="url(#f-wax-shadow)"/>
-    <path d="${WAX}" fill="url(#g-gwax)"/>
-    <path d="${WAX}" fill="none" stroke="#6d4740" stroke-opacity=".5" stroke-width="1.4"/>
-    <circle r="66" fill="url(#g-gwax-disc)"/>
-    <circle r="66" fill="none" stroke="#6b443d" stroke-opacity=".45" stroke-width="2.4"/>
-    <circle r="68" fill="none" stroke="#F8E6E0" stroke-opacity=".55" stroke-width="1.1"/>
-    <circle r="59" fill="none" stroke="url(#g-foil)" stroke-width="2.2" stroke-linecap="round" stroke-dasharray=".01 5.149"/>
-    <g class="seal-mono" transform="translate(${(-w / 2).toFixed(2)} ${(-h / 2 + 2).toFixed(2)}) scale(${s.toFixed(4)})">
-      <g transform="translate(1.4 2.2)">${mono('fill="#4a2621" stroke="#4a2621" stroke-width="2.2" opacity=".5"')}</g>
-      ${mono('fill="url(#g-foil)" stroke="url(#g-foil)" stroke-width="2.2" stroke-linejoin="round"')}
-    </g>
-    <ellipse cx="-30" cy="-50" rx="40" ry="14" fill="#fff" opacity=".2" transform="rotate(-30 -30 -50)"/>
   </svg>`;
 }
 
