@@ -41,9 +41,9 @@ export const config = {
     hijri: '',
     timeText: '8:30 PM onwards',
     venuePrefix: 'At –',
-    venue: 'K Ground',
-    address: ['Jogeshwari West'],
-    map: { url: 'https://share.google/sy6khHyUMiL4J80iD', lat: null, lng: null, query: 'K Ground, Jogeshwari West, Mumbai' },
+    venue: 'Killedar Ground',
+    address: ['Swami Vivekanand Rd', 'opposite MTNL', 'Jogeshwari West, Mumbai'],
+    map: { url: 'https://share.google/sy6khHyUMiL4J80iD', lat: null, lng: null, query: 'Killedar Ground, Swami Vivekanand Rd, opposite MTNL, Jogeshwari West, Mumbai' },
   },
 
   families: 'Gadith\u2019s',
@@ -54,8 +54,7 @@ export const config = {
   text: {
     tapHint: 'Tap to open',
     revealTitle: 'Tap to Reveal',
-    revealedTitle: 'Save the Date',
-    inshallah: 'Inshallah',
+    revealedTitle: 'Inshallah',
     countdownTitle: 'Counting down to the big day',
     countdownDone: 'Today is the day \u2014 Alhamdulillah',
     closingKicker: 'With love & duas',

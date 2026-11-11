@@ -84,10 +84,6 @@
   width: 32cqw;
 }
 
-.orn--xs {
-  width: 26cqw;
-}
-
 .orn svg {
   width: 100%;
   height: auto;
@@ -389,6 +385,10 @@ body.has-turned .swipe-hint {
   opacity: 0;
 }
 
+.t-after .foil-rose {
+  background-image: var(--foil-rose-deep);
+}
+
 .date-card {
   position: relative;
   display: block;
@@ -452,17 +452,6 @@ body.has-turned .swipe-hint {
   font-size: 0.55em;
   line-height: 0;
   vertical-align: 0.75em;
-}
-
-.d-insha {
-  font-family: var(--script);
-  font-size: 8cqw;
-  line-height: 1.15;
-  padding: 0 0.3em;
-  background: var(--foil);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
 }
 
 .veil {

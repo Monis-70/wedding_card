@@ -20,6 +20,7 @@
   --line: rgba(168, 132, 63, 0.55);
   --foil: linear-gradient(100deg, #8c6a2f 0%, #c9a55e 20%, #f4e4b2 38%, #c49a4e 55%, #9c7834 74%, #ddbe78 100%);
   --foil-rose: linear-gradient(100deg, #7a3f39 0%, #b06c61 22%, #e7b4a5 40%, #b9786c 56%, #84453e 76%, #c48b7d 100%);
+  --foil-rose-deep: linear-gradient(100deg, #5f2f2b 0%, #7d3f39 28%, #9a5249 46%, #7a3c36 66%, #5f2f2b 100%);
 
   --serif: 'Cormorant Garamond', 'Cormorant', Georgia, 'Times New Roman', serif;
   --caps: 'Cinzel', 'Cormorant Garamond', Georgia, serif;

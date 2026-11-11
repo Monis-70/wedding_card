@@ -61,8 +61,6 @@ function datePage(event) {
           <span class="d-cal">${icon.calendar}</span>
           <span class="d-weekday">${esc(p.weekday)},</span>
           <span class="d-date">${dateLineHtml(p)}</span>
-          <span class="orn orn--xs">${divider}</span>
-          <span class="d-insha">${esc(T.inshallah)}</span>
         </span>
         <span class="veil" aria-hidden="true">
           <span class="veil-shimmer"></span>
@@ -245,7 +243,7 @@ export function setupPages(root, { variant, petals, reduced, onReplay }) {
     });
   }
 
-  // Date: tap to reveal, title turns into "Save the Date", petals burst, countdown rolls
+  // Date: tap to reveal, title turns into "Inshallah", petals burst, countdown rolls
   const date = $('[data-page="date"]', root);
   if (date) {
     const event = variant === 'reception' ? config.reception : config.nikah;
