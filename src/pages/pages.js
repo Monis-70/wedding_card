@@ -217,7 +217,7 @@ export function pageList(variant) {
     { id: 'names', label: 'Invitation', html: namesPage() },
     { id: 'date', label: 'Save the date', html: datePage(variant === 'reception' ? config.reception : config.nikah) },
   ];
-  if (variant !== 'reception') pages.push({ id: 'nikah', label: 'Nikah', html: eventPage(config.nikah, 'nikah', true) });
+  if (variant !== 'reception') pages.push({ id: 'nikah', label: 'Nikah', html: eventPage(config.nikah, 'nikah') });
   pages.push({ id: 'reception', label: 'Reception', html: eventPage(config.reception, 'reception', variant === 'reception') });
   pages.push({ id: 'closing', label: 'With love', html: closingPage() });
   return pages;
