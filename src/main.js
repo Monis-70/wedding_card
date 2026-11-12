@@ -9,7 +9,7 @@ import { fadeLogo, loadAssets, revealStage } from './scenes/loader.js';
 import { createFlowers } from './scenes/flowers.js';
 import { createGate } from './scenes/gate.js';
 import { createDeck } from './deck/deck.js';
-import { fitArch, pageList, revealPage, setupPages } from './pages/pages.js';
+import { fitPages, pageList, revealPage, setupPages } from './pages/pages.js';
 
 const variant =
   document.documentElement.dataset.variant === 'reception' || /^\/reception\/?$/.test(window.location.pathname) ? 'reception' : 'full';
@@ -141,13 +141,13 @@ async function invitePeeks() {
 
 async function run() {
   await loadAssets({ music, quick: replayed, reduced });
-  fitArch(deckEl);
+  fitPages(deckEl);
   let fitTimer;
   window.addEventListener('resize', () => {
     clearTimeout(fitTimer);
-    fitTimer = setTimeout(() => fitArch(deckEl), 150);
+    fitTimer = setTimeout(() => fitPages(deckEl), 150);
   });
-  document.fonts?.addEventListener('loadingdone', () => fitArch(deckEl));
+  document.fonts?.addEventListener('loadingdone', () => fitPages(deckEl));
   petals.setCount(reduced ? 3 : 8);
   petals.start();
   await revealStage({ reduced });
@@ -177,7 +177,7 @@ run().catch(async (err) => {
   $('#loader')?.remove();
   $('#intro')?.remove();
   document.body.classList.remove('intro-playing');
-  fitArch(deckEl);
+  fitPages(deckEl);
   revealPage(pageEls[0], { reduced: true });
   deck.unlock();
   nav.classList.add('is-visible');

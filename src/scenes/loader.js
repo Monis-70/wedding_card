@@ -9,6 +9,7 @@ export async function loadAssets({ music, quick, reduced }) {
   const fonts = document.fonts
     ? Promise.all([
         document.fonts.load('400 40px "Great Vibes"'),
+        document.fonts.load('400 40px "Allura"', 'A'),
         document.fonts.load('500 20px "Cormorant Garamond"'),
         document.fonts.load('italic 500 20px "Cormorant Garamond"'),
         document.fonts.load('500 20px "Cinzel"'),

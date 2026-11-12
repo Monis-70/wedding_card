@@ -13,6 +13,7 @@ const groom = esc(config.groom.name);
 
 const bg = () => '<div class="sheet-bg" aria-hidden="true"></div><div class="bg-sparkles" aria-hidden="true"></div>';
 const orn = (cls = '') => `<div class="orn ${cls}" data-r>${divider}</div>`;
+const inshaLine = () => `<p class="script-title script-title--md" data-w><span class="foil-rose foil-rose--deep">${esc(T.blessing)}</span></p>`;
 
 function namesPage() {
   return `
@@ -53,7 +54,7 @@ function datePage(event) {
       <div class="tap-icon" data-r aria-hidden="true">${icon.tap}</div>
       <p class="script-title date-title" data-w>
         <span class="t-before"><span class="foil-rose">${esc(T.revealTitle)}</span></span>
-        <span class="t-after" aria-hidden="true"><span class="foil-rose">${esc(T.revealedTitle)}</span></span>
+        <span class="t-after" aria-hidden="true"><span class="foil-rose foil-rose--deep">${esc(T.revealedTitle)}</span></span>
       </p>
       ${orn()}
       <button class="date-card" type="button" data-r aria-label="${esc(T.revealTitle)}">
@@ -78,7 +79,7 @@ function datePage(event) {
   </div>`;
 }
 
-function eventPage(event, kind) {
+function eventPage(event, kind, blessed = false) {
   const p = dateParts(event.start);
   const url = mapsUrl(event);
   const reception = kind === 'reception';
@@ -87,6 +88,7 @@ function eventPage(event, kind) {
     ${bg()}
     ${reception ? `<div class="bokeh" aria-hidden="true"></div><div class="lanterns" aria-hidden="true">${lantern('l1')}${lantern('l2')}${lantern('l3')}</div>` : ''}
     <div class="stack stack--event">
+      ${blessed ? inshaLine() : ''}
       ${reception ? '' : `<button class="rings-btn" type="button" data-r aria-label="Tap the rings">${rings}<span class="rings-pulse" aria-hidden="true"></span></button>`}
       ${event.eyebrow ? `<p class="eyebrow" data-r>${esc(event.eyebrow)}</p>` : ''}
       <h2 class="script-title script-title--xl" data-w><span class="foil-rose">${esc(event.title)}</span></h2>
@@ -117,6 +119,7 @@ function closingPage() {
       <p class="compliments" data-r>${esc(T.compliments)}</p>
       ${orn()}
       <p class="closing-family" data-w>${esc(config.families)}</p>
+      ${inshaLine()}
       <button class="replay" type="button" data-r>${icon.replay}<span>Watch again</span></button>
     </div>
   </div>`;
@@ -191,13 +194,31 @@ export function fitArch(root) {
   });
 }
 
+// Shrinks a page's text block just enough to stay inside its area (only needed on short screens).
+function fitStacks(root) {
+  $$('.stack', root).forEach((stack) => {
+    stack.style.transform = '';
+    const kids = [...stack.children].filter((n) => n.offsetHeight > 0);
+    if (!kids.length) return;
+    const first = kids[0];
+    const last = kids[kids.length - 1];
+    const natural = last.offsetTop + last.offsetHeight - first.offsetTop;
+    if (natural > stack.clientHeight + 1) stack.style.transform = `scale(${Math.max(0.7, stack.clientHeight / natural).toFixed(3)})`;
+  });
+}
+
+export function fitPages(root) {
+  fitArch(root);
+  fitStacks(root);
+}
+
 export function pageList(variant) {
   const pages = [
     { id: 'names', label: 'Invitation', html: namesPage() },
     { id: 'date', label: 'Save the date', html: datePage(variant === 'reception' ? config.reception : config.nikah) },
   ];
-  if (variant !== 'reception') pages.push({ id: 'nikah', label: 'Nikah', html: eventPage(config.nikah, 'nikah') });
-  pages.push({ id: 'reception', label: 'Reception', html: eventPage(config.reception, 'reception') });
+  if (variant !== 'reception') pages.push({ id: 'nikah', label: 'Nikah', html: eventPage(config.nikah, 'nikah', true) });
+  pages.push({ id: 'reception', label: 'Reception', html: eventPage(config.reception, 'reception', variant === 'reception') });
   pages.push({ id: 'closing', label: 'With love', html: closingPage() });
   return pages;
 }

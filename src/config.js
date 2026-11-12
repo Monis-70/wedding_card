@@ -54,7 +54,8 @@ export const config = {
   text: {
     tapHint: 'Tap to open',
     revealTitle: 'Tap to Reveal',
-    revealedTitle: 'Inshallah',
+    revealedTitle: 'In Sha Allah',
+    blessing: 'In Sha Allah',
     countdownTitle: 'Counting down to the big day',
     countdownDone: 'Today is the day \u2014 Alhamdulillah',
     closingKicker: 'With love & duas',

@@ -43,6 +43,11 @@
   line-height: 1.05;
 }
 
+.script-title--md {
+  font-size: 11cqw;
+  line-height: 1.12;
+}
+
 .foil-rose,
 .foil {
   display: inline-block;
@@ -55,6 +60,10 @@
 
 .foil-rose {
   background-image: var(--foil-rose);
+}
+
+.foil-rose--deep {
+  background-image: var(--foil-rose-deep);
 }
 
 .foil {
@@ -383,10 +392,6 @@ body.has-turned .swipe-hint {
 
 .t-after {
   opacity: 0;
-}
-
-.t-after .foil-rose {
-  background-image: var(--foil-rose-deep);
 }
 
 .date-card {
