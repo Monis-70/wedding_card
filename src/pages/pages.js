@@ -119,7 +119,6 @@ function closingPage() {
       <p class="compliments" data-r>${esc(T.compliments)}</p>
       ${orn()}
       <p class="closing-family" data-w>${esc(config.families)}</p>
-      ${inshaLine()}
       <button class="replay" type="button" data-r>${icon.replay}<span>Watch again</span></button>
     </div>
   </div>`;
