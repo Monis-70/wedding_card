@@ -73,6 +73,11 @@
     0 12px 30px -16px rgba(60, 34, 26, 0.3);
 }
 
+/* the pages are only laid out once the intro has loaded the fonts (they are hidden under the loader until then) */
+.page.is-deferred .sheet {
+  content-visibility: hidden;
+}
+
 .sheet-bg {
   position: absolute;
   inset: -3%;

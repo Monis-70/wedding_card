@@ -28,7 +28,7 @@ document.body.appendChild(
   <main id="deck" aria-roledescription="carousel" aria-label="${esc(`Wedding invitation of ${couple}`)}">
     ${pages
       .map(
-        (p, i) => `<section class="page" data-page="${p.id}" aria-roledescription="slide" aria-label="${i + 1} of ${pages.length}: ${esc(p.label)}">
+        (p, i) => `<section class="page is-deferred" data-page="${p.id}" aria-roledescription="slide" aria-label="${i + 1} of ${pages.length}: ${esc(p.label)}">
       ${p.html}<div class="shade" aria-hidden="true"></div></section>`,
       )
       .join('')}
@@ -139,14 +139,34 @@ async function invitePeeks() {
   }
 }
 
+const cardSize = () => `${pageEls[0].offsetWidth}x${pageEls[0].offsetHeight}`;
+let fittedSize = '';
+function refit() {
+  pageEls.forEach((p) => p.classList.remove('is-deferred'));
+  fittedSize = cardSize();
+  fitPages(deckEl);
+}
+
+// The first layout of the pages, one page per frame, so the logo's last sparkles never stall.
+async function firstFit() {
+  fittedSize = cardSize();
+  for (const page of pageEls) {
+    page.classList.remove('is-deferred');
+    fitPages(page);
+    await Promise.race([new Promise(requestAnimationFrame), wait(100)]);
+  }
+}
+
 async function run() {
   await loadAssets({ music, quick: replayed, reduced });
-  fitPages(deckEl);
+  await firstFit();
+  // refit when the card's size really changes, with or without a window "resize" event
   let fitTimer;
-  window.addEventListener('resize', () => {
+  new ResizeObserver(() => {
+    if (cardSize() === fittedSize) return;
     clearTimeout(fitTimer);
-    fitTimer = setTimeout(() => fitPages(deckEl), 150);
-  });
+    fitTimer = setTimeout(refit, 150);
+  }).observe(pageEls[0]);
   document.fonts?.addEventListener('loadingdone', () => fitPages(deckEl));
   petals.setCount(reduced ? 3 : 8);
   petals.start();
@@ -177,7 +197,7 @@ run().catch(async (err) => {
   $('#loader')?.remove();
   $('#intro')?.remove();
   document.body.classList.remove('intro-playing');
-  fitPages(deckEl);
+  refit();
   revealPage(pageEls[0], { reduced: true });
   deck.unlock();
   nav.classList.add('is-visible');

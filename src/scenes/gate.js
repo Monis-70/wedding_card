@@ -24,10 +24,13 @@ export function createGate(root, { reduced, petals, hint }) {
   const gate = $('.gate', root);
   const hintEl = $('.gate-hint', root);
   let geo;
+  let built = '';
 
   function build() {
     const W = gate.offsetWidth;
     const H = gate.offsetHeight;
+    if (!W || !H) return;
+    built = `${W}x${H}`;
     geo = gateMarkup(W, H);
     $('.gate-doors', root).innerHTML = geo.doors;
     $('.gate-ribbon', root).innerHTML = geo.ribbon;
@@ -35,8 +38,10 @@ export function createGate(root, { reduced, petals, hint }) {
   }
   build();
   let opening = false;
-  const onResize = () => !opening && build();
-  window.addEventListener('resize', onResize);
+  // The doors are drawn for the card's exact size, so redraw whenever that size changes - also when no window
+  // "resize" event comes (in-app browsers that settle their viewport after the page has started).
+  const sizeWatch = new ResizeObserver(() => !opening && `${gate.offsetWidth}x${gate.offsetHeight}` !== built && build());
+  sizeWatch.observe(gate);
   if (!reduced) zoom.style.transform = 'scale(1.06)';
   const ribbonY = () => (geo.cy / gate.offsetHeight) * 100;
 
@@ -70,7 +75,7 @@ export function createGate(root, { reduced, petals, hint }) {
 
     async open(onReveal) {
       opening = true;
-      window.removeEventListener('resize', onResize);
+      sizeWatch.disconnect();
       const part = (c) => $(`.${c}`, root);
       if (reduced) {
         onReveal();
