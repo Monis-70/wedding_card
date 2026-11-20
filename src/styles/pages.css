@@ -812,6 +812,10 @@ body.has-turned .swipe-hint {
   color: var(--name);
 }
 
+.det-note {
+  display: block;
+}
+
 .i-min {
   transform-box: view-box;
   transform-origin: 12px 12px;

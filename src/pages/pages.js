@@ -97,7 +97,7 @@ function eventPage(event, kind, blessed = false) {
       <ul class="details">
         <li data-r>${icon.calendar}<span class="det"><em>${esc(event.dayText)}</em><strong>${dateLineHtml(p)}</strong>${event.hijri ? `<em>${esc(event.hijri)}</em>` : ''}</span></li>
         <li data-r>${icon.clock}<span class="det"><em>${esc(event.timeText)}</em></span></li>
-        <li data-r>${icon.pin}<span class="det"><strong>${esc(event.venuePrefix)} ${esc(event.venue)}</strong>${[].concat(event.address).map((a) => `<span>${esc(a)}</span>`).join('')}</span></li>
+        <li data-r>${icon.pin}<span class="det"><strong>${esc(event.venuePrefix)} ${esc(event.venue)}${event.venueNote ? ` <span class="det-note">${esc(event.venueNote)}</span>` : ''}</strong>${[].concat(event.address).map((a) => `<span>${esc(a)}</span>`).join('')}</span></li>
       </ul>
       ${orn()}
       ${url ? `<a class="map-btn" data-r href="${esc(url)}" target="_blank" rel="noopener" aria-label="Open the ${esc(event.title)} venue in Google Maps">${icon.pin}<span>Open in Maps</span></a>` : ''}

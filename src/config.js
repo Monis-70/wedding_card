@@ -42,6 +42,7 @@ export const config = {
     timeText: '8:30 PM onwards',
     venuePrefix: 'At –',
     venue: 'Killedar Ground',
+    venueNote: '(Golden Memories)',
     address: ['Swami Vivekanand Rd', 'opposite MTNL', 'Jogeshwari West, Mumbai'],
     map: { url: 'https://share.google/sy6khHyUMiL4J80iD', lat: null, lng: null, query: 'Killedar Ground, Swami Vivekanand Rd, opposite MTNL, Jogeshwari West, Mumbai' },
   },
